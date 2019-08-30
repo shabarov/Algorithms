@@ -12,6 +12,9 @@ import ru.shabarov.mezentcev.chapter11.Task11_8;
 
 import java.util.*;
 
+/**
+ * Practice with Mezentcev A.V. 'Algorithm exercises' book
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -51,7 +54,6 @@ public class Main {
             }
         }
         */
-
 
         //Chapter 04, Task 4.6
         System.out.println("Chapter 04 Task 4.6:");
@@ -154,13 +156,5 @@ public class Main {
                 "as well as the IDEs for it. My team \n" +
                 "mates seem to use IntelliJ but I found it a bit overwhelming.";
         System.out.printf("Longest word in a phrase is: %s", Task11_8.getLongestWord(phrase));
-
-
-        /*Test Git tools
-
-            1. Push to github test
-            2. One more push test
-
-        */
     }
 }
