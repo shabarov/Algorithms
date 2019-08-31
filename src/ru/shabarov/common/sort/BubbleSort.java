@@ -1,5 +1,18 @@
 package ru.shabarov.common.sort;
 
+/**
+ * Complexity:
+ * Worst case - array reverse sorted.
+ * Worst, average case, best cases - O(n^2)
+ * Best case - Can be optimized for 'already sorted' case - break if first pass gives no swaps,
+ * so that the complexity becomes O(n).
+ *
+ * Stable: Yes
+ *
+ * Space: O(1)
+ *
+ * Auxiliary space: no, except swap buffer (O(1))
+ */
 class BubbleSort {
 
     static void sort(int[] a) {

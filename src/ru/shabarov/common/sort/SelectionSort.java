@@ -1,5 +1,12 @@
 package ru.shabarov.common.sort;
 
+/**
+ * Complexity: O(n^2) all cases
+ *
+ * Stable: No, but can be made stable if we introduce index comparison for equal elements
+ *
+ * Additional space: O(1). Max swaps = n
+ */
 class SelectionSort {
 
     static void sort(int [] a) {
