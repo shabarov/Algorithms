@@ -1,4 +1,4 @@
-package ru.shabarov;
+package ru.shabarov.mezentcev;
 
 import ru.shabarov.mezentcev.chapter01.Task1_7;
 import ru.shabarov.mezentcev.chapter02.Task2_7;

@@ -1,6 +1,5 @@
 package ru.shabarov.mezentcev.chapter11;
 
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
