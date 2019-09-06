@@ -10,7 +10,7 @@ public class Main {
         System.out.println("table contains bbb = " + table.contains("bbb"));
         System.out.println("table contains ddd = " + table.contains("ddd"));
 
-        //Non-balanced BST
+        //Balanced BST
         BinarySearchTree binarySearchTree = new BinarySearchTree();
         binarySearchTree.add(4);
         binarySearchTree.add(6);
@@ -31,6 +31,14 @@ public class Main {
 
         System.out.println("BST contains 0 = " + binarySearchTree.contains(0));
         System.out.println("BST contains 10 = " + binarySearchTree.contains(10));
+
+        BinarySearchTree bst2 = new BinarySearchTree();
+        bst2.add(20);
+        bst2.add(17);
+        bst2.add(15);
+        bst2.add(10);
+        bst2.add(7);
+        System.out.println("bst2.asArray() = " + bst2.asArray());
 
         // Bloom Filter for Strings
         BloomFilter bloomFilter = new BloomFilter();
