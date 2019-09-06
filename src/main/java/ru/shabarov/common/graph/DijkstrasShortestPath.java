@@ -2,6 +2,13 @@ package ru.shabarov.common.graph;
 
 import java.util.*;
 
+/**
+ * Complexity: O((V + E)log(V))
+ *
+ * Space: O(E+V) for pred, dist, weights, queue
+ *
+ * Usage: search shortest path for ordered graph
+ */
 class DijkstrasShortestPath {
     
     private Map<Graph.Vertex<String>, Graph.Vertex<String>> pred = new HashMap<>();

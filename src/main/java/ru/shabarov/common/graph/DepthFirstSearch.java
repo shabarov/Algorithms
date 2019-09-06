@@ -2,6 +2,14 @@ package ru.shabarov.common.graph;
 
 import java.util.*;
 
+/**
+ * Complexity: O(V + E)
+ *
+ * Space: O(V) for colors, pred
+ *
+ * Usage: for non-ordered graphs, quick search between two given nodes
+ */
+
 class DepthFirstSearch {
 
     private Graph<String> graph;

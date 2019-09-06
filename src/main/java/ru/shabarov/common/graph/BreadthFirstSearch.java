@@ -2,6 +2,13 @@ package ru.shabarov.common.graph;
 
 import java.util.*;
 
+/**
+ * Complexity: O(V + E)
+ *
+ * Space: 0(V) for queue, colors, dist, pred
+ *
+ * Usage: for non-ordered graphs, find shortest path to nodes
+ */
 class BreadthFirstSearch {
 
     private Graph<String> graph;

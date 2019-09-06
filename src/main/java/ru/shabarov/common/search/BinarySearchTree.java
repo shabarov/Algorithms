@@ -9,7 +9,7 @@ import java.util.List;
  *
  * Complexity: O(Log(n)) (search, delete/insert)
  *
- * Space - O(n)
+ * Space - O(n) for height
  *
  * Usage: 1. Elements traverse in asc/desc order
  *        2. Elements count is unknown, and data structure should provide any count storage in memory

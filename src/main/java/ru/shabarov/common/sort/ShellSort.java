@@ -1,5 +1,9 @@
 package ru.shabarov.common.sort;
 
+/**
+ * Complexity: worst and average case O(n^2)
+ * best case - O(nlog(n))
+ */
 class ShellSort {
 
     static void sort(int [] a) {

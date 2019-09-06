@@ -4,6 +4,14 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 
+/**
+ * Complexity: O(k) where k - amount of hash functions, does not depend on elements amount
+ *
+ * Space is not depend of storage elements
+ *
+ * Usage: quick insert/contains operations. 'Contains element?' action can give erroneous check result
+ * but 'Doesn't contain element?' action always gives genuine result
+ */
 class BloomFilter {
 
     private static final int N = 1000;
