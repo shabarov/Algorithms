@@ -52,5 +52,10 @@ public class Main {
 
         System.out.println("bloomFilter contains 'ab' = " + bloomFilter.contains("ab"));
         System.out.println("bloomFilter contains 'abracadabra' = " + bloomFilter.contains("abracadabra"));
+
+        // Binary Search
+        int [] a2 = {0,1,2,3,4,5,6,7,8,9};
+        boolean search = BinarySearch.search(a2, 3);
+        System.out.println("search = " + search);
     }
 }
