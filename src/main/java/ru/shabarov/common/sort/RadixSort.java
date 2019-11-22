@@ -2,7 +2,7 @@ package ru.shabarov.common.sort;
 
 /**
  * Counting sort extension.
- * What if the elements are in range from 1 to n2?
+ * What if the elements are in range from 1 to n^2?
  * We can’t use counting sort because counting sort will take O(n2) which is worse than comparison based sorting algorithms.
  * Can we sort such an array in linear time?
  * Radix Sort is the answer. The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit.

@@ -17,6 +17,11 @@ public class Main {
 
         System.out.println("fact(1000) = " + fact(10));
         System.out.println("fact2(1000) = " + fact2(10));
+
+        int a1 = 1;
+        int b1 = 2;
+        a1 = b1 - a1 + (b1 = a1);
+        System.out.printf("a = %d, b = %d", a1, b1);
     }
 
     private static String [] getArray() {
