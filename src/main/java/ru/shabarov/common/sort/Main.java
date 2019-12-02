@@ -33,6 +33,11 @@ public class Main {
         validate(a);
         print(a);
 
+        a = getSortedArray();
+        QuickSort.sort(a);
+        validate(a);
+        print(a);
+
         a = new Random().ints(0, 10).limit(10).toArray();
         BucketSort.sort(a, 0, 10);
         validate(a);
@@ -51,6 +56,10 @@ public class Main {
 
     private static int [] getUnsortedArray() {
         return new int[]{6, 3, 8, 4, 9, 5, 3, 2, 7, 1};
+    }
+
+    private static int [] getSortedArray() {
+        return new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
     }
 
     private static void print(int [] a) {

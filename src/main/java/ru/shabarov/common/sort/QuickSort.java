@@ -26,20 +26,20 @@ class QuickSort {
             return;
         }
 
-        int smallerInd = min;
+        int medianElementIdx = min;
         for (int i = min; i < max; i++) {
             if (a[i] < a[max]) {
-                int tmp = a[smallerInd];
-                a[smallerInd] = a[i];
+                int tmp = a[medianElementIdx];
+                a[medianElementIdx] = a[i];
                 a[i] = tmp;
-                smallerInd++;
+                medianElementIdx++;
             }
         }
-        int tmp = a[smallerInd];
-        a[smallerInd] = a[max];
+        int tmp = a[medianElementIdx];
+        a[medianElementIdx] = a[max];
         a[max] = tmp;
 
-        sort(a, min, smallerInd - 1);
-        sort(a, smallerInd + 1, max);
+        sort(a, min, medianElementIdx - 1);
+        sort(a, medianElementIdx + 1, max);
     }
 }

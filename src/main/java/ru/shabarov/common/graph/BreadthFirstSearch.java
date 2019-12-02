@@ -24,16 +24,22 @@ class BreadthFirstSearch {
     }
 
     void search(String first) {
+        //Start from first vertex
         Graph.Vertex<String> firstVertex = Graph.Vertex.fromLabel(first);
+        //Reset all vertexes and edges
         this.graph.getVertices().forEach(v -> {
             this.dist.put(v, Integer.MAX_VALUE);
             this.colors.put(v, VertexColor.WHITE);
         });
+        //Mark first label as gray
         this.colors.put(firstVertex, VertexColor.GRAY);
         this.dist.put(firstVertex, 0);
+
+        //Create a deque for storing adjacent vertexes which are not yet visited
         Deque<Graph.Vertex<String>> q = new LinkedList<>();
         q.add(firstVertex);
 
+        //While deque has elements which means the graph has not totally visited yet
         while (!q.isEmpty()) {
             Graph.Vertex<String> u = q.getLast();
             this.graph.getAdjVertices(u).forEach(v -> {
