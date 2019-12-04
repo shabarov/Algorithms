@@ -17,7 +17,7 @@ class MergeSort {
 
     private static void sort(int[] a, int lower, int right) {
         if (lower < right) {
-            int m = (right + lower) / 2;
+            int m = lower + (right - lower) / 2;
             sort(a, lower, m);
             sort(a, m + 1, right);
             merge(a, lower, m, right);
