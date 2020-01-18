@@ -5,8 +5,12 @@ import java.util.Stack;
 public class ArithmeticExpressionParser {
 
     public static void main(String[] args) {
-        final String result = new ArithmeticExpressionParser().infix2Postfix("1 + 2 * 3 - 4");
+        final ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
+        String result = parser.infix2Postfix("1 + 2 * 3 - 4");
         System.out.println("\"1 + 2 * 3 - 4\" = " + result);
+
+        result = parser.infix2Postfix("(1 + 2) * 3 - 4");
+        System.out.println("\"(1 + 2) * 3 - 4\" = " + result);
     }
 
     private String infix2Postfix(String expression) {
@@ -29,15 +33,21 @@ public class ArithmeticExpressionParser {
                     if (!operations.isEmpty()) {
                         Operation prevOperation = operations.peek();
                         if (prevOperation.priority > operation.priority) {
+                            prevOperation = operations.pop();
                             while (prevOperation != Operation.LEFT_BRACE && !operations.isEmpty()) {
                                 postfixExpression.append(prevOperation.action);
                                 prevOperation = operations.pop();
                             }
+                            postfixExpression.append(prevOperation.action);
                         }
                     }
                     operations.push(operation);
                 }
             }
+        }
+
+        for (Operation operation : operations) {
+            postfixExpression.append(operation.action);
         }
 
         return postfixExpression.toString();
