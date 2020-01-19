@@ -13,6 +13,7 @@ public class ArithmeticExpressionParser {
         System.out.println(parser.evaluate("(1 + 2) * 3 - 4")); //5
         System.out.println(parser.evaluate("(1+2)*(3-4*(3-2))")); //-3
 
+        System.out.println(parser.evaluate("1")); //1
         System.out.println(parser.evaluate("42+1")); //43
         System.out.println(parser.evaluate("5/2")); //2
         System.out.println(parser.evaluate("3 + 4"));//7
@@ -71,7 +72,6 @@ public class ArithmeticExpressionParser {
                             if (funcBracesCounter-- == 1) {
                                 postfixExpression.append(funcNameBuilder.toString());
                                 funcNameBuilder.delete(0, funcNameBuilder.length());
-                                funcBracesCounter = 0;
                             }
                         }
                     } else {
