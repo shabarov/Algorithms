@@ -9,28 +9,28 @@ public class ArithmeticExpressionParser {
     public static void main(String[] args) {
         final ArithmeticExpressionParser parser = new ArithmeticExpressionParser();
 
-//        System.out.println(parser.evaluate("1 + 2 * 3 - 4")); //3
-//        System.out.println(parser.evaluate("(1 + 2) * 3 - 4")); //5
-//        System.out.println(parser.evaluate("(1+2)*(3-4*(3-2))")); //-3
-//
-//        System.out.println(parser.evaluate("42+1")); //43
-//        System.out.println(parser.evaluate("5/2")); //2
-//        System.out.println(parser.evaluate("3 + 4"));//7
-//        System.out.println(parser.evaluate("6-4 / 4"));//5
-//        System.out.println(parser.evaluate("4*(5+5*2)/3+(6/2+9)"));//32
-//        System.out.println(parser.evaluate("(4+6* 3+9- (3*16/8+2)*5)+3"));//-6
-//
-//        System.out.println(parser.evaluate("(5+6)*3-6*(1+6/2)"));//9
-//
-//        System.out.println(parser.evaluate("2^3 - 1"));//7
+        System.out.println(parser.evaluate("1 + 2 * 3 - 4")); //3
+        System.out.println(parser.evaluate("(1 + 2) * 3 - 4")); //5
+        System.out.println(parser.evaluate("(1+2)*(3-4*(3-2))")); //-3
+
+        System.out.println(parser.evaluate("42+1")); //43
+        System.out.println(parser.evaluate("5/2")); //2
+        System.out.println(parser.evaluate("3 + 4"));//7
+        System.out.println(parser.evaluate("6-4 / 4"));//5
+        System.out.println(parser.evaluate("4*(5+5*2)/3+(6/2+9)"));//32
+        System.out.println(parser.evaluate("(4+6* 3+9- (3*16/8+2)*5)+3"));//-6
+
+        System.out.println(parser.evaluate("(5+6)*3-6*(1+6/2)"));//9
+
+        System.out.println(parser.evaluate("2^3 - 1"));//7
 
         System.out.println(parser.evaluate("1+cos(3 - 1)"));//7
     }
 
-    private Integer evaluate(String expression) {
+    private Double evaluate(String expression) {
         String postfix = infix2Postfix(expression);
         BinaryArithmeticTreeNode treeNode = postfix2Tree(postfix);
-        Integer res = evalTree(treeNode);
+        Double res = evalTree(treeNode);
         return res;
     }
 
@@ -43,7 +43,7 @@ public class ArithmeticExpressionParser {
         StringBuilder funcNameBuilder = new StringBuilder();
         while (idx < expression.length()) {
             final char nextChar = expression.charAt(idx);
-            if (Character.isDigit(nextChar)) {
+            if (Character.isDigit(nextChar) || nextChar == '.') {
                 if (numStartIdx < 0) {
                     if (idx == expression.length() - 1) {
                         postfixExpression.append(expression, idx, idx + 1).append(SEPARATOR);
@@ -113,19 +113,15 @@ public class ArithmeticExpressionParser {
                     createFuncNode(postfix, nodes, funcStartIdx, i);
                     funcStartIdx = -1;
                 }
-                if (Character.isDigit(nextChar)) {
+                if (Character.isDigit(nextChar) || nextChar == '.') {
                     if (numStartIdx < 0) {
                         numStartIdx = i;
                     }
                 } else if (nextChar == SEPARATOR) {
                     BinaryArithmeticTreeNode numNode = new BinaryArithmeticTreeNode();
-                    numNode.numValue = Integer.parseInt(postfix.substring(numStartIdx, i));
+                    numNode.numValue = Double.parseDouble(postfix.substring(numStartIdx, i));
                     numStartIdx = -1;
                     nodes.push(numNode);
-                } else if (Character.isAlphabetic(nextChar)) {
-                    if (funcStartIdx < 0) {
-                        funcStartIdx = i;
-                    }
                 } else {
                     Operation oper = Operation.of(String.valueOf(nextChar));
                     BinaryArithmeticTreeNode operNode = new BinaryArithmeticTreeNode();
@@ -147,7 +143,7 @@ public class ArithmeticExpressionParser {
         nodes.push(funcNode);
     }
 
-    private Integer evalTree(BinaryArithmeticTreeNode treeNode) {
+    private Double evalTree(BinaryArithmeticTreeNode treeNode) {
         if (treeNode.numValue != null) {
             return treeNode.numValue;
         } else {
@@ -161,9 +157,9 @@ public class ArithmeticExpressionParser {
                 case MULT:
                     return evalTree(treeNode.left) * evalTree(treeNode.right);
                 case POW:
-                    return (int) Math.pow(evalTree(treeNode.left), evalTree(treeNode.right));
+                    return Math.pow(evalTree(treeNode.left), evalTree(treeNode.right));
                 case COS:
-                    return (int) Math.cos(evalTree(treeNode.left));
+                    return Math.cos(evalTree(treeNode.left));
                 default:
                     throw new IllegalStateException("Unknown operation");
             }
@@ -172,7 +168,7 @@ public class ArithmeticExpressionParser {
 
     static class BinaryArithmeticTreeNode {
         Operation operation;
-        Integer numValue;
+        Double numValue;
         BinaryArithmeticTreeNode left;
         BinaryArithmeticTreeNode right;
     }
