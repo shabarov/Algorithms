@@ -21,6 +21,10 @@ public class ArithmeticExpressionParser {
         System.out.println(parser.evaluate("(4+6* 3+9- (3*16/8+2)*5)+3"));//-6
 
         System.out.println(parser.evaluate("(5+6)*3-6*(1+6/2)"));//9
+
+        System.out.println(parser.evaluate("2^3 - 1"));//7
+
+//        System.out.println(parser.evaluate("cos(1)"));//7
     }
 
     private Integer evaluate(String expression) {
@@ -36,6 +40,7 @@ public class ArithmeticExpressionParser {
 
         int idx = 0;
         int numStartIdx = -1;
+        int funcStartIdx = -1;
         while (idx < expression.length()) {
             final char nextChar = expression.charAt(idx);
             if (Character.isDigit(nextChar)) {
@@ -45,6 +50,10 @@ public class ArithmeticExpressionParser {
                     }
                     numStartIdx = idx;
                 }
+            } else if (Character.isAlphabetic(nextChar)) {
+                if (funcStartIdx < 0) {
+                    funcStartIdx = idx;
+                }
             } else {
                 if (numStartIdx >= 0) {
                     postfixExpression.append(expression, numStartIdx, idx).append(SEPARATOR);
@@ -53,9 +62,14 @@ public class ArithmeticExpressionParser {
                 if (!Character.isWhitespace(nextChar)) {
                     final Operation operation = Operation.of(String.valueOf(nextChar));
                     if (Operation.RIGHT_BRACE == operation) {
-                        Operation prevOperation;
-                        while ((prevOperation = operations.pop()) != Operation.LEFT_BRACE) {
-                            postfixExpression.append(prevOperation.action);
+                        if (funcStartIdx >= 0) {
+                            parseFunc(postfixExpression, expression.substring(funcStartIdx, idx));
+                            funcStartIdx = -1;
+                        } else {
+                            Operation prevOperation;
+                            while ((prevOperation = operations.pop()) != Operation.LEFT_BRACE) {
+                                postfixExpression.append(prevOperation.action);
+                            }
                         }
                     } else {
                         if (!operations.isEmpty()) {
@@ -82,6 +96,13 @@ public class ArithmeticExpressionParser {
         }
 
         return postfixExpression.toString();
+    }
+
+    private void parseFunc(StringBuilder postfix, String funcExpression) {
+        int leftBraceIdx = funcExpression.indexOf(Operation.LEFT_BRACE.action);
+        Operation func = Operation.of(funcExpression.substring(0, leftBraceIdx));
+        String operand = funcExpression.substring(leftBraceIdx + 1);
+        postfix.append(operand).append(SEPARATOR).append(func.action);
     }
 
     private BinaryArithmeticTreeNode postfix2Tree(String postfix) {
@@ -123,6 +144,10 @@ public class ArithmeticExpressionParser {
                     return evalTree(treeNode.left) / evalTree(treeNode.right);
                 case MULT:
                     return evalTree(treeNode.left) * evalTree(treeNode.right);
+                case POW:
+                    return (int) Math.pow(evalTree(treeNode.left), evalTree(treeNode.right));
+                case COS:
+                    return (int) Math.cos(evalTree(treeNode.left));
                 default:
                     throw new IllegalStateException("Unknown operation");
             }
@@ -139,11 +164,13 @@ public class ArithmeticExpressionParser {
     enum Operation {
 
         PLUS("+", 0),
-        MINUS("-", 1),
-        MULT("*", 2),
-        DIV("/", 3),
+        MINUS("-", 0),
+        MULT("*", 1),
+        DIV("/", 1),
+        POW("^", 2),
+        COS("cos", 3),
         LEFT_BRACE("(", -1),
-        RIGHT_BRACE(")", -2);
+        RIGHT_BRACE(")", -1);
 
         String action;
         int priority;
