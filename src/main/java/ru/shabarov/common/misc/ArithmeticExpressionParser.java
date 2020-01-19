@@ -24,7 +24,9 @@ public class ArithmeticExpressionParser {
 
         System.out.println(parser.evaluate("2^3 - 1"));//7
 
-        System.out.println(parser.evaluate("1+cos(3 - 1)"));//7
+        System.out.println(parser.evaluate("1+cos(3 * (1 +2))"));
+
+        System.out.println(parser.evaluate("1+abs(3*(1+2)-10)"));//2
     }
 
     private Double evaluate(String expression) {
@@ -41,6 +43,7 @@ public class ArithmeticExpressionParser {
         int idx = 0;
         int numStartIdx = -1;
         StringBuilder funcNameBuilder = new StringBuilder();
+        int funcBracesCounter = 0;
         while (idx < expression.length()) {
             final char nextChar = expression.charAt(idx);
             if (Character.isDigit(nextChar) || nextChar == '.') {
@@ -65,10 +68,16 @@ public class ArithmeticExpressionParser {
                             postfixExpression.append(prevOperation.action);
                         }
                         if (funcNameBuilder.length() > 0) {
-                            postfixExpression.append(funcNameBuilder.toString());
-                            funcNameBuilder.delete(0, funcNameBuilder.length());
+                            if (funcBracesCounter-- == 1) {
+                                postfixExpression.append(funcNameBuilder.toString());
+                                funcNameBuilder.delete(0, funcNameBuilder.length());
+                                funcBracesCounter = 0;
+                            }
                         }
                     } else {
+                        if (operation == Operation.LEFT_BRACE && funcNameBuilder.length() > 0) {
+                            funcBracesCounter++;
+                        }
                         if (!operations.isEmpty()) {
                             Operation prevOperation = operations.peek();
                             if (operation != Operation.LEFT_BRACE && prevOperation.priority > operation.priority) {
@@ -160,6 +169,8 @@ public class ArithmeticExpressionParser {
                     return Math.pow(evalTree(treeNode.left), evalTree(treeNode.right));
                 case COS:
                     return Math.cos(evalTree(treeNode.left));
+                case ABS:
+                    return Math.abs(evalTree(treeNode.left));
                 default:
                     throw new IllegalStateException("Unknown operation");
             }
@@ -181,6 +192,7 @@ public class ArithmeticExpressionParser {
         DIV("/", 1),
         POW("^", 2),
         COS("cos", 3),
+        ABS("abs", 3),
         LEFT_BRACE("(", -1),
         RIGHT_BRACE(")", -1);
 
