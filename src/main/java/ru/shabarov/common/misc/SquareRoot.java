@@ -1,6 +1,6 @@
 package ru.shabarov.common.misc;
 
-public class Misc {
+public class SquareRoot {
 
     public static void main(String [] args) {
         System.out.println("sqrt(16) = " + sqrt(16));
